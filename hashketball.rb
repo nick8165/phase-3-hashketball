@@ -126,4 +126,80 @@ def game_hash
   }
 end
 
-# Write code here
+def num_points_scored(player)
+  found = game_hash[:home][:players].filter { |b| b[:player_name] == player }
+  if found == []
+    find = game_hash[:away][:players].filter { |c| c[:player_name] == player }
+    find[0][:points]
+  else 
+    found[0][:points]
+  end
+end
+
+def shoe_size(player)
+  found = game_hash[:home][:players].filter { |b| b[:player_name] == player }
+  if found == []
+    find = game_hash[:away][:players].filter { |c| c[:player_name] == player }
+    find[0][:shoe]
+  else 
+    found[0][:shoe]
+  end
+end
+
+def team_colors(team)
+  if team == "Brooklyn Nets"
+    colors = game_hash[:home][:colors]
+    colors 
+  elsif team == "Charlotte Hornets"
+    colors = game_hash[:away][:colors]
+    colors 
+  end
+end
+
+def team_names
+  team = []
+  team.push(game_hash[:home][:team_name])
+  team.push(game_hash[:away][:team_name])
+  team
+end
+
+def player_numbers(team)
+  numbers = []
+  if team == "Brooklyn Nets"
+     game_hash[:home][:players].map { |b| numbers.push(b[:number]) }
+  elsif team == "Charlotte Hornets"
+    game_hash[:away][:players].map { |b| numbers.push(b[:number]) }
+  end
+  numbers
+end
+
+def player_stats(player)
+  found = game_hash[:home][:players].filter { |b| b[:player_name] == player }
+  if found == []
+    find = game_hash[:away][:players].filter { |c| c[:player_name] == player }
+    find[0]
+  else 
+    found[0]
+  end
+end
+
+def big_shoe_rebounds
+  home = 0
+  game_hash[:home][:players].map do |b| 
+    if b[:shoe] > home
+      home = b[:shoe]
+    else puts home
+    end
+  end
+  home_player = game_hash[:home][:players].filter { |b| b[:shoe] == home}
+  away = 0
+  game_hash[:away][:players].map do |b| 
+    if b[:shoe] > away
+      away = b[:shoe]
+    else puts home
+    end
+  end
+  away_player = game_hash[:away][:players].filter { |b| b[:shoe] == away}
+  home_player[0][:shoe] > away_player[0][:shoe] ? home_player[0][:rebounds] : away_player[0][:rebounds]
+end
+
